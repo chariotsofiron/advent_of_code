@@ -1,7 +1,6 @@
 """Day 3."""
 import math
 import sys
-
 from collections import defaultdict
 
 text = sys.stdin.read()
@@ -11,6 +10,7 @@ n_cols = len(lines[0])
 
 
 def is_next_to_symbol(i: int, j: int) -> bool:
+    """Returns `True` if cell (i, j) is adjacent to a symbol."""
     for row in [-1, 0, 1]:
         for col in [-1, 0, 1]:
             x = i + row
@@ -25,7 +25,8 @@ def is_next_to_symbol(i: int, j: int) -> bool:
     return False
 
 
-def is_next_to_gear(i: int, j: int) -> list[tuple[int, int]]:
+def get_adjacent_gears(i: int, j: int) -> list[tuple[int, int]]:
+    """Returns the list coordinates with gears."""
     next_to = []
     for row in [-1, 0, 1]:
         for col in [-1, 0, 1]:
@@ -47,7 +48,7 @@ for i, line in enumerate(lines):
             num += c
             if is_next_to_symbol(i, j):
                 ok = True
-            if gear := is_next_to_gear(i, j):
+            if gear := get_adjacent_gears(i, j):
                 gears_next_to.update(gear)
         elif ok:
             ans1 += int(num)
@@ -66,6 +67,8 @@ for i, line in enumerate(lines):
         for gear in gears_next_to:
             gears[gear].append(int(num))
 
+N_GEARS = 2
+ans2 = sum(math.prod(nums) for nums in gears.values() if len(nums) == N_GEARS)
+
 print("part1:", ans1)
-ans2 = sum([math.prod(nums) for nums in gears.values() if len(nums) == 2])
 print("part2:", ans2)

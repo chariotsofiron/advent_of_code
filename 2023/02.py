@@ -1,6 +1,6 @@
 """Day 2."""
-import sys
 import math
+import sys
 
 text = sys.stdin.read()
 
